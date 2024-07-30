@@ -50,6 +50,7 @@ TabManager::TabManager(MainWindow *o, const QString& filename)
 
   connect(par->editActionIndent, SIGNAL(triggered()), this, SLOT(indentSelection()));
   connect(par->editActionUnindent, SIGNAL(triggered()), this, SLOT(unindentSelection()));
+  connect(par->editActionAutoIndent, SIGNAL(triggered()), this, SLOT(autoIndent()));
   connect(par->editActionComment, SIGNAL(triggered()), this, SLOT(commentSelection()));
   connect(par->editActionUncomment, SIGNAL(triggered()), this, SLOT(uncommentSelection()));
 
@@ -271,6 +272,11 @@ void TabManager::indentSelection()
 void TabManager::unindentSelection()
 {
   editor->unindentSelection();
+}
+
+void TabManager::autoIndent()
+{
+  editor->autoIndent();
 }
 
 void TabManager::commentSelection()

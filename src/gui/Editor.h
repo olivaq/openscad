@@ -47,6 +47,7 @@ public slots:
   virtual bool isContentModified() = 0;
   virtual void indentSelection() = 0;
   virtual void unindentSelection() = 0;
+  virtual void autoIndent() = 0;
   virtual void commentSelection() = 0;
   virtual void uncommentSelection() = 0;
   virtual void setPlainText(const QString&) = 0;

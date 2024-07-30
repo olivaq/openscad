@@ -61,6 +61,7 @@ private slots:
   void paste();
   void indentSelection();
   void unindentSelection();
+  void autoIndent();
   void commentSelection();
   void uncommentSelection();
   void updateActionUndoState();
