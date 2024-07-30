@@ -889,6 +889,86 @@ void ScintillaEditor::getRange(int *lineFrom, int *lineTo)
   }
 }
 
+void ScintillaEditor::autoIndent()
+{
+  qsci->beginUndoAction();
+  long lineNumber = 0;
+  int indents = 0;
+  bool incomment = false;
+  bool extraIndent = false;
+
+  while(true) {
+    long length = qsci->lineLength(lineNumber);
+
+    if (length == -1) {
+      break;
+
+    }
+    char line[length];
+    qsci->SendScintilla(QsciScintilla::SCI_GETLINE, lineNumber, &line);
+
+    bool semiColon = false;
+    bool paranthesis = false;
+    int currentIndent = indents;
+    bool whitespace = true;
+    bool endParanthesis = false;
+    bool inLine = true;
+
+    for (long i = 0; i < length; i++) {
+      if ( i > 0 && line[i -1] == '/' && line[i] == '/') {
+        break;
+      }
+      switch(line[i]) {
+        case '{':
+        case '(':
+        case '[':
+          if (whitespace) {
+            extraIndent = false;
+          }
+          endParanthesis = false;
+          indents++;
+          break;
+        case '}':
+          endParanthesis = false;
+          indents--;
+          currentIndent--;
+          break;
+        case ')':
+          endParanthesis = true;
+          indents--;
+          break;
+        case ']':
+          endParanthesis = false;
+          indents--;
+          break;
+        case ',':
+        case ';':
+          inLine = false;
+          endParanthesis = false;
+          break;
+      }
+
+      if (line[i] != ' ' && line[i] != '\t') {
+        whitespace = false;
+      }
+    }
+
+    if(extraIndent) {
+      currentIndent++;
+      extraIndent = false;
+    }
+
+    qsci->setIndentation(lineNumber, currentIndent * Settings::Settings::showWhitespaceSize.value());
+
+    lineNumber++;
+
+    if(endParanthesis) {
+      extraIndent = true;
+    }
+  }
+  qsci->endUndoAction();
+}
+
 void ScintillaEditor::indentSelection()
 {
   int lineFrom, lineTo;

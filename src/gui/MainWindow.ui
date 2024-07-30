@@ -277,6 +277,7 @@
     <addaction name="separator"/>
     <addaction name="editActionIndent"/>
     <addaction name="editActionUnindent"/>
+    <addaction name="editActionAutoIndent"/>
     <addaction name="editActionComment"/>
     <addaction name="editActionUncomment"/>
     <addaction name="editActionConvertTabsToSpaces"/>
@@ -1478,6 +1479,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+I</string>
+   </property>
+  </action>
+  <action name="editActionAutoIndent">
+   <property name="text">
+    <string>Autoindent</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+A</string>
    </property>
   </action>
   <action name="helpActionCheatSheet">

@@ -126,6 +126,7 @@ public slots:
   void highlightError(int) override;
   void unhighlightLastError() override;
   void setHighlightScheme(const QString&) override;
+  void autoIndent() override;
   void indentSelection() override;
   void unindentSelection() override;
   void commentSelection() override;
